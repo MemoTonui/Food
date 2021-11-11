@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UI.Profile">
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="230dp"
+       android:background="@color/black"
+       android:padding="20dp">
+
+       <ImageView
+           android:id="@+id/profile_image"
+           android:layout_marginLeft="50dp"
+           android:layout_width="90dp"
+           android:layout_height="100dp"
+           android:layout_centerVertical="true"
+           android:src="@drawable/profile" />
+       <TextView
+           android:id="@+id/fullname"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerVertical="true"
+           android:layout_marginLeft="10dp"
+           android:layout_toRightOf="@+id/profile_image"
+           android:fontFamily="sans-serif-condensed"
+           android:includeFontPadding="false"
+           android:text="Taimoor Sikander"
+           android:textColor="@color/white"
+           android:textSize="20sp" />
+
+       <TextView
+           android:fontFamily="sans-serif-condensed"
+           android:id="@+id/email"
+           android:layout_width="wrap_content"
+           android:textColor="@color/white"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/fullname"
+           android:layout_marginLeft="10dp"
+           android:layout_toRightOf="@+id/profile_image"
+           android:includeFontPadding="false"
+           android:text="tonuilinda@gmail.com"
+           android:textSize="14sp" />
+
+   </RelativeLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-60dp"
+        android:layout_width="match_parent"
+        android:padding="10dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:hint="Full Name"
+        android:layout_margin="5dp"
+        android:id="@+id/full_name_profile"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:background="@color/white"
+            android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+            android:fontFamily="sans-serif-condensed"
+            android:drawablePadding="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Username"
+            android:layout_margin="5dp"
+            android:id="@+id/username"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
+                android:fontFamily="sans-serif-condensed"
+                android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+                android:drawablePadding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Email Address"
+            android:layout_margin="5dp"
+            android:id="@+id/emailAddress"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:background="@color/white"
+                android:fontFamily="sans-serif-condensed"
+                android:drawableLeft="@drawable/ic_baseline_email_24"
+                android:drawablePadding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Phone Number"
+            android:layout_margin="5dp"
+            android:id="@+id/phone"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:fontFamily="sans-serif-condensed"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_phone_iphone_24"
+                android:drawablePadding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:background="@drawable/border_radius"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:text="UPDATE" />
+
+
+    </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

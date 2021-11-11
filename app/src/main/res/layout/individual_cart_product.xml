@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="0dp"
+        android:padding="3dp"
+        android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:elevation="4dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/food_image"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    android:src="@drawable/food2"/>
+                <TextView
+                    android:id="@+id/food_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/black"
+
+                    android:textSize="20sp"
+                    android:layout_toRightOf="@+id/food_image"
+                    android:layout_marginLeft="25dp"
+                    android:text="Food Number 1"
+                    />
+
+                <TextView
+                    android:id="@+id/food_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@id/food_image"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Ksh 2000"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+
+
+                    <ImageView
+                        android:id="@+id/plus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/food_price"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_toRightOf="@id/food_image"
+                        android:src="@drawable/ic_baseline_control_point_24" />
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:padding="2dp"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="80dp"
+                        android:layout_below="@id/food_price"
+                        android:layout_toRightOf="@id/plus"/>
+                <ImageView
+                    android:id="@+id/minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/food_price"
+                    android:layout_marginTop="80dp"
+                    android:layout_toRightOf="@id/quantity"
+                    android:src="@drawable/ic_baseline_remove_circle_outline_24" />
+
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/food_price"
+                    android:layout_toRightOf="@id/minus"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginLeft="50dp"
+                    android:src="@drawable/ic_baseline_delete_forever_24"/>
+
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

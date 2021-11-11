@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Food</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="fullname">Full Name</string>
+    <string name="email">Email Address</string>
+    <string name="phone">Phone Number</string>
+    <string name="password">Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="alreadyHaveAnAccount">Already Have An Account?</string>
+    <string name="noAccount">No Account?</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+
+    <!--Drawer menu Strings-->
+    <string name="open_nav_drawer">Open Navigation Drawer</string>
+    <string name="close_nav_drawer">Close Navigation Drawer</string>
+
 </resources>
