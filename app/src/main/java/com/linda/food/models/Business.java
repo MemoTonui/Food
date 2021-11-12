@@ -1,9 +1,6 @@
 
 package com.linda.food.models;
 
-import com.linda.food.Category;
-import com.linda.food.Coordinates;
-import com.linda.food.Location;
 
 import java.io.Serializable;
 import java.util.HashMap;
