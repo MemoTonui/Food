@@ -10,16 +10,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.linda.food.R;
-import com.linda.food.models.Cart;
+import com.linda.food.models.Food;
 
 import java.util.List;
 
 public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder> {
     Context context;
-    List<Cart> foodList;
+    List<Food> foodList;
 
-    public CartRecyclerAdapter(Context context, List<Cart> foodList) {
+    public CartRecyclerAdapter(Context context, List<Food> foodList) {
         this.context = context;
         this.foodList = foodList;
     }
@@ -32,7 +34,8 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CartRecyclerAdapter.CartViewHolder holder, int position) {
-
+        final Food food = foodList.get(position);
+        holder.bind(food);
     }
 
     @Override
@@ -52,8 +55,12 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
             foodPrice = itemView.findViewById(R.id.food_price);
             foodImage = itemView.findViewById(R.id.food_image);
             quantity = itemView.findViewById(R.id.quantity);
+        }
 
-
+        public void bind(Food food) {
+            foodName.setText(food.getFood_name());
+            foodPrice.setText(String.valueOf(food.getFood_price()));
+            Glide.with(itemView.getContext()).load(food.getFood_image()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
         }
     }
     }

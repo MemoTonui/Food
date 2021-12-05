@@ -13,12 +13,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.linda.food.Constants.Constants.YELP_API_BASE_URL;
+import static com.linda.food.Constants.Constants.FOOODZILLA_BASE_URL;
 
-public class YelpClient {
+public class FoodzillaClient {
     private static Retrofit retrofit = null;
 
-    public  static YelpService getClient(){
+    public  static FoodzillaService getClient(){
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -29,7 +29,7 @@ public class YelpClient {
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
-                            Request newRequest  = chain.request().newBuilder()
+                            Request newRequest = chain.request().newBuilder()
                                     .header("Content-Type", "application/json; charset=UTF-8")
                                     .build();
                             return chain.proceed(newRequest);
@@ -42,12 +42,12 @@ public class YelpClient {
                     .create();
 
             retrofit = new Retrofit.Builder()
-                    .baseUrl(YELP_API_BASE_URL)
+                    .baseUrl(FOOODZILLA_BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
 
         }
-        return retrofit.create(YelpService.class);
+        return retrofit.create(FoodzillaService.class);
     }
 }

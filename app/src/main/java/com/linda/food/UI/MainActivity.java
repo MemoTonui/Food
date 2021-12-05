@@ -2,7 +2,10 @@ package com.linda.food.UI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,21 +20,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.linda.food.Network.FoodzillaClient;
+import com.linda.food.Network.FoodzillaService;
 import com.linda.food.R;
 import com.linda.food.adapters.RestaurantRecyclerAdapter;
-import com.linda.food.models.Restaurants;
+import com.linda.food.models.Business;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    RecyclerView restaurantRecyclerView;
+
     RestaurantRecyclerAdapter recyclerAdapter;
     FirebaseAuth firebaseAuth;
     FirebaseAuth.AuthStateListener authStateListener;
+    @BindView(R.id.restaurantsRecyclerView) RecyclerView recyclerView;
     @BindView(R.id.name) TextView name;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -39,6 +48,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.failure) TextView failure;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    List<Business> restaurants = new ArrayList<>();
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +76,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+
+
+        //Implementation of Yelp Service
+        FoodzillaService client = FoodzillaClient.getClient();
+        Call<List<Business>> call =client.getAllBusinesses();
+
+
+
+        call.enqueue(new Callback<List<Business>>() {
+            @Override
+            public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
+                if (response.isSuccessful()){
+                    hideProgressBar();
+                    List<Business> body = response.body();
+                    if(body == null){
+                       Log.d(TAG,"Hapa Hakuna Kitu") ;
+                       failure.setText("There are no restaurants here");
+                       return;
+                    }else {
+                        restaurants.addAll(body);
+                        recyclerAdapter = new RestaurantRecyclerAdapter(MainActivity.this, restaurants);
+                        recyclerView.setAdapter(recyclerAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setHasFixedSize(true);
+                    }
+                }
+                else {
+                    hideProgressBar();
+                    showUnSuccessfulMessage();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Business>> call, Throwable t) {
+                hideProgressBar();
+                showFailureMessage();
+                Log.d(TAG,"On Failure",t);
+            }
+        });
+
+
+
+
         //Tool bar
         setSupportActionBar(toolbar);
 
@@ -72,19 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setCheckedItem(R.id.nav_home);
 
 
-        //Dummy data ya the liist of restauranta
-        List<Restaurants> restaurantsList = new ArrayList<>();
-        restaurantsList.add(new Restaurants("Lavington Restaurant",5,"Madaraka","https://ibb.co/JyWcN5N","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Kileleshwa Restaurant",4,"Madaraka","https://ibb.co/pbNrFs8","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Mumbai Restaurant",2,"Madaraka","https://ibb.co/qjV2RFx","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Lavington Restaurant",5,"Madaraka","https://ibb.co/JyWcN5N","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Kileleshwa Restaurant",4,"Madaraka","https://ibb.co/pbNrFs8","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Mumbai Restaurant",2,"Madaraka","https://ibb.co/qjV2RFx","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Lavington Restaurant",5,"Madaraka","https://ibb.co/JyWcN5N","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Kileleshwa Restaurant",4,"Madaraka","https://ibb.co/pbNrFs8","45.00","45.00"));
-        restaurantsList.add(new Restaurants("Mumbai Restaurant",2,"Madaraka","https://ibb.co/qjV2RFx","45.00","45.00"));
-
-         setRestaurantsRecycler(restaurantsList);
     }
 
     @Override
@@ -98,14 +147,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void setRestaurantsRecycler(List<Restaurants> restaurantsList){
 
-        restaurantRecyclerView = findViewById(R.id.restaurantsRecyclerView);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        restaurantRecyclerView.setLayoutManager(layoutManager);
-        recyclerAdapter = new RestaurantRecyclerAdapter(this,restaurantsList);
-         restaurantRecyclerView.setAdapter(recyclerAdapter );
-    }
+
 
     //Logout method
     private void logout() {
@@ -145,5 +188,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+    //Progress Bar
+    private  void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+
+    }
+    private void showUnSuccessfulMessage(){
+        failure.setText("Sorry you do not have Internet Access! Please Try Again Later");
+        failure.setVisibility(View.VISIBLE);
+    }
+    private void showFailureMessage(){
+        failure.setText("Sorry, Our Services are Unavailable!");
+        failure.setVisibility(View.VISIBLE);
     }
 }

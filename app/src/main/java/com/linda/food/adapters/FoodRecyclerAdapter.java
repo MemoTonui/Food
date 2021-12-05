@@ -1,6 +1,7 @@
 package com.linda.food.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.linda.food.R;
 import com.linda.food.models.Food;
 
@@ -20,10 +23,17 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
 
     Context context;
     List<Food>foods;
+    private ClickAddToCartListener ClickAddToCartListener;
 
-    public FoodRecyclerAdapter(Context context, List<Food> foods) {
+    //Add to cart listener
+    public interface ClickAddToCartListener{
+        void onClickAddToCart(ImageView addToCart, Food food);
+    }
+
+    public FoodRecyclerAdapter(Context context, List<Food> foods,ClickAddToCartListener clickAddToCartListener) {
         this.context = context;
         this.foods = foods;
+        this.ClickAddToCartListener = clickAddToCartListener;
     }
 
     @NonNull
@@ -34,12 +44,26 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder holder, int position) {
+        final Food food = foods.get(position);
+        holder.bind(food);
+        holder.foodCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(food.getAddedToCart() == false) {
+                    ClickAddToCartListener.onClickAddToCart(holder.foodCart, food);
+
+                }
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-        return foods.size();
+        if(foods.size()!=0){
+            return foods.size();
+        }
+        return 0;
     }
 
     public static final class FoodViewHolder extends RecyclerView.ViewHolder  {
@@ -47,19 +71,26 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
         TextView foodName;
         TextView foodPrice;
         RatingBar rating;
+        ImageView foodCart;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
+
             foodName = itemView.findViewById(R.id.food_name);
             foodPrice = itemView.findViewById(R.id.food_price);
             foodImage = itemView.findViewById(R.id.food_image);
-            rating = itemView.findViewById(R.id.rating);
-
-
-
-
+            rating = itemView.findViewById(R.id.ratingBar);
+            foodCart = itemView.findViewById(R.id.cart);
         }
 
-
+        public void bind(Food food) {
+            foodName.setText(food.getFood_name());
+            foodPrice.setText(String.valueOf(food.getFood_price()));
+            rating.setRating(food.getFood_rating());
+            Glide.with(itemView.getContext()).load(food.getFood_image()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
+            if(food.getAddedToCart()==true){
+                foodCart.setColorFilter(Color.rgb(220,220,220));
+            }
+        }
     }
 }

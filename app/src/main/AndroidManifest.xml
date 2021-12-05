@@ -5,6 +5,9 @@
     android:largeHeap="true">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -12,7 +15,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/favicon"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
+
         <activity android:name=".UI.Support" android:theme="@style/Theme.Food" android:label="Support" ></activity>
         <activity android:name=".UI.Profile" android:theme="@style/Theme.Food" android:label="Profile" />
         <activity android:name=".UI.Cart" android:theme="@style/Theme.Food" android:label="Cart" />
@@ -20,11 +25,10 @@
         <activity android:name=".UI.Orders" android:theme="@style/Theme.Food" android:label="My Orders" />
         <activity
             android:name=".UI.FoodActivity"
-            android:theme="@style/Theme.Food" />
+            android:theme="@style/Theme.Design.Light.NoActionBar"/>
         <activity android:name=".UI.IntroductoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

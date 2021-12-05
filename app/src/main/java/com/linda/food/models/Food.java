@@ -1,13 +1,16 @@
 package com.linda.food.models;
 
 public class Food {
+    private int food_id;
     private String food_name;
-    private int food_rating;
+    private float food_rating;
     private String food_image;
     private int restaurant_id;
     private int food_price;
+    private Boolean isAddedToCart =false;
 
-    public Food(String food_name, int food_rating, String food_image, int restaurant_id, int food_price) {
+    public Food(int food_id, String food_name, float food_rating, String food_image, int restaurant_id, int food_price) {
+        this.food_id = food_id;
         this.food_name = food_name;
         this.food_rating = food_rating;
         this.food_image = food_image;
@@ -18,6 +21,22 @@ public class Food {
 
     }
 
+    public Boolean getAddedToCart() {
+        return isAddedToCart;
+    }
+
+    public void setAddedToCart(Boolean addedToCart) {
+        isAddedToCart = addedToCart;
+    }
+
+    public int getFood_id() {
+        return food_id;
+    }
+
+    public void setFood_id(int food_id) {
+        this.food_id = food_id;
+    }
+
     public String getFood_name() {
         return food_name;
     }
@@ -26,11 +45,11 @@ public class Food {
         this.food_name = food_name;
     }
 
-    public int getFood_rating() {
+    public float getFood_rating() {
         return food_rating;
     }
 
-    public void setFood_rating(int food_rating) {
+    public void setFood_rating(float food_rating) {
         this.food_rating = food_rating;
     }
 
