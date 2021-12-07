@@ -8,6 +8,7 @@ public class Food {
     private int restaurant_id;
     private int food_price;
     private Boolean isAddedToCart =false;
+    private Boolean isAddedToFavorites = false;
 
     public Food(int food_id, String food_name, float food_rating, String food_image, int restaurant_id, int food_price) {
         this.food_id = food_id;
@@ -19,6 +20,14 @@ public class Food {
     }
     public Food(){
 
+    }
+
+    public Boolean getAddedToFavorites() {
+        return isAddedToFavorites;
+    }
+
+    public void setAddedToFavorites(Boolean addedToFavorites) {
+        isAddedToFavorites = addedToFavorites;
     }
 
     public Boolean getAddedToCart() {

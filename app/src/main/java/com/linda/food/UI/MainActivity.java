@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.failure) TextView failure;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+    @BindView (R.id.cart)
+    ImageView cart;
+    @BindView(R.id.favorites) ImageView favorites;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     List<Business> restaurants = new ArrayList<>();
@@ -76,6 +80,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
 
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Cart.class);
+                startActivity(intent);
+            }
+        });
+
+        favorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Favorites.class);
+                startActivity(intent);
+            }
+        });
 
 
         //Implementation of Yelp Service

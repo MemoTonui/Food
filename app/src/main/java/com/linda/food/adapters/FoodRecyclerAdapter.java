@@ -24,16 +24,23 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
     Context context;
     List<Food>foods;
     private ClickAddToCartListener ClickAddToCartListener;
+    private ClickAddToFavoritesListener ClickAddToFavoritesListener;
 
     //Add to cart listener
     public interface ClickAddToCartListener{
         void onClickAddToCart(ImageView addToCart, Food food);
     }
+    //Add To Favorites Listener
+    public interface ClickAddToFavoritesListener {
+        void onClickAddToFavorites(ImageView addToFavorites, Food food);
+    }
 
-    public FoodRecyclerAdapter(Context context, List<Food> foods,ClickAddToCartListener clickAddToCartListener) {
+
+    public FoodRecyclerAdapter(Context context, List<Food> foods,ClickAddToCartListener clickAddToCartListener, ClickAddToFavoritesListener clickAddToFavoritesListener) {
         this.context = context;
         this.foods = foods;
         this.ClickAddToCartListener = clickAddToCartListener;
+        this.ClickAddToFavoritesListener = clickAddToFavoritesListener;
     }
 
     @NonNull
@@ -55,6 +62,14 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
                 }
             }
         });
+        holder.favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!food.getAddedToFavorites()){
+                    ClickAddToFavoritesListener.onClickAddToFavorites(holder.favorite,food);
+                }
+            }
+        });
 
     }
 
@@ -72,6 +87,7 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
         TextView foodPrice;
         RatingBar rating;
         ImageView foodCart;
+        ImageView favorite;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +97,7 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
             foodImage = itemView.findViewById(R.id.food_image);
             rating = itemView.findViewById(R.id.ratingBar);
             foodCart = itemView.findViewById(R.id.cart);
+            favorite = itemView.findViewById(R.id.favorites);
         }
 
         public void bind(Food food) {
@@ -90,6 +107,9 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
             Glide.with(itemView.getContext()).load(food.getFood_image()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
             if(food.getAddedToCart()==true){
                 foodCart.setColorFilter(Color.rgb(220,220,220));
+            }
+            if(food.getAddedToFavorites() == true){
+                favorite.setColorFilter(Color.rgb(220,0,0));
             }
         }
     }

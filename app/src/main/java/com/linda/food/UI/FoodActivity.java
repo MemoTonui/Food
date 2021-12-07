@@ -1,7 +1,6 @@
 package com.linda.food.UI;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,6 +16,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.linda.food.Constants.Constants;
 import com.linda.food.Network.FoodzillaClient;
 import com.linda.food.Network.FoodzillaService;
@@ -39,6 +42,8 @@ public class FoodActivity extends AppCompatActivity {
     FoodRecyclerAdapter foodRecyclerAdapter;
     List<Food> foodList= new ArrayList<>();
     List<Food> cartFoodList;
+    List<Food> favoritesFoodsLIst;
+
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.foodRecyclerFood) RecyclerView foodRecyclerView;
     @BindView(R.id.failure) TextView failure;
@@ -53,6 +58,14 @@ public class FoodActivity extends AppCompatActivity {
     float rating;
 
     String restaurantName;
+    //Firebase
+    private  DatabaseReference food;
+    private DatabaseReference foodName;
+    private DatabaseReference foodPrice;
+    private DatabaseReference image;
+    private DatabaseReference foodRating;
+
+
 
     private static final String TAG = MainActivity.class.getSimpleName();
     @Override
@@ -61,6 +74,15 @@ public class FoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_food);
         ButterKnife.bind(this);
         cartFoodList = new ArrayList<>();
+        favoritesFoodsLIst = new ArrayList<>();
+
+        //Gets User id
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        food = FirebaseDatabase.getInstance().getReference("Favorites").child(userId);
+        //Creates a node that stores favorites
+        DatabaseReference pushRef = food.push();
+
         //Toolbar
         setSupportActionBar(toolbar);
 
@@ -92,12 +114,21 @@ public class FoodActivity extends AppCompatActivity {
                             public void onClickAddToCart(ImageView addToCart, Food food) {
                                 food.setAddedToCart(true);
                                 Toast.makeText(FoodActivity.this, "Added to Cart", Toast.LENGTH_LONG).show();
-                               // Snackbar.make(addToCart,"Added to Cart",Snackbar.LENGTH_SHORT).setBackgroundTint(Color.BLACK).show();
-                                addToCart.setColorFilter(Color.rgb(255,0,0));
+                                // Snackbar.make(addToCart,"Added to Cart",Snackbar.LENGTH_SHORT).setBackgroundTint(Color.BLACK).show();
                                 foodRecyclerAdapter.notifyDataSetChanged();
                                 cartFoodList.add(food);
                                 PrefConfig.writeListInPref(getApplicationContext(),cartFoodList);
                             }
+                        }, new FoodRecyclerAdapter.ClickAddToFavoritesListener() {
+                            @Override
+                            public void onClickAddToFavorites(ImageView addToFavorites, Food food) {
+                               saveFavoriteToFirebase(food.getFood_id(),food.getFood_name(),food.getFood_rating(),food.getFood_image(),food.getRestaurant_id(),food.getFood_price());
+
+                                food.setAddedToFavorites(true);
+                                addToFavorites.setImageResource(R.drawable.ic_vector__1_);
+                                foodRecyclerAdapter.notifyDataSetChanged();
+                            }
+
                         });
 
                         foodRecyclerView.setAdapter(foodRecyclerAdapter);
@@ -125,6 +156,19 @@ public class FoodActivity extends AppCompatActivity {
     //Progress Bar
     private  void hideProgressBar(){
         progressBar.setVisibility(View.GONE);
+
+    }
+    private void saveFavoriteToFirebase(int food_id, String food_name, float food_rating, String food_image, int restaurant_id, int food_price ){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        Food myFood = new Food(food_id,food_name,food_rating,food_image,restaurant_id,food_price);
+
+        food.push().setValue(myFood);
+        Toast.makeText(FoodActivity.this, "Added to Favorites", Toast.LENGTH_LONG).show();
+
+
+
+
 
     }
     private void showUnSuccessfulMessage(){
