@@ -4,36 +4,65 @@
     android:hardwareAccelerated="false"
     android:largeHeap="true">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/favicon"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/favicon"
         android:supportsRtl="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_api_key"/>
 
-        <activity android:name=".UI.Support" android:theme="@style/Theme.Food" android:label="Support" ></activity>
-        <activity android:name=".UI.Profile" android:theme="@style/Theme.Food" android:label="Profile" />
-        <activity android:name=".UI.Cart" android:theme="@style/Theme.Food" android:label="Cart" />
-        <activity android:name=".UI.Favorites" android:theme="@style/Theme.Food" android:label="Favorites" />
-        <activity android:name=".UI.Orders" android:theme="@style/Theme.Food" android:label="My Orders" />
+        <activity android:name=".UI.MapActivity"></activity>
+        <activity android:name=".UI.ProfileSetup" />
+        <activity android:name=".UI.Success" />
+        <activity android:name=".UI.Summary" />
+        <activity
+            android:name=".UI.Checkout"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".UI.Support"
+            android:label="Support"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".UI.Profile"
+            android:label="Profile"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".UI.Cart"
+            android:label="Cart"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".UI.Favorites"
+            android:label="Favorites"
+            android:theme="@style/Theme.Food" />
+        <activity
+            android:name=".UI.Orders"
+            android:label="My Orders"
+            android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.FoodActivity"
-            android:theme="@style/Theme.Design.Light.NoActionBar"/>
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity android:name=".UI.IntroductoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".UI.Login" />
-        <activity android:name=".UI.MainActivity"  />
+        <activity android:name=".UI.MainActivity" />
     </application>
 
 </manifest>

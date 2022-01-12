@@ -1,5 +1,6 @@
 package com.linda.food.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,12 @@ public class Cart extends AppCompatActivity {
             cartFoodList = PrefConfig.readListFromPref(getApplicationContext());
             setCartRecycler(cartFoodList);
         }
+        proceedToCheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Cart.this,Checkout.class));
+            }
+        });
     }
 
    private void setCartRecycler(List<Food> foodList){
@@ -53,6 +60,7 @@ public class Cart extends AppCompatActivity {
         cartRecyclerAdapter = new CartRecyclerAdapter(this,foodList);
         recyclerView.setAdapter(cartRecyclerAdapter);
     }
+
     //Progress Bar
    /* private  void hideProgressBar(){
         progressBar.setVisibility(View.GONE);

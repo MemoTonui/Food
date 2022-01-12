@@ -65,11 +65,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:hint="Full Name"
         android:layout_margin="5dp"
-        android:id="@+id/full_name_profile"
+
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/full_name_profile"
             android:background="@color/white"
             android:drawableLeft="@drawable/ic_baseline_account_circle_24"
             android:fontFamily="sans-serif-condensed"
@@ -81,11 +82,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:hint="Username"
             android:layout_margin="5dp"
-            android:id="@+id/username"
+
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
                 android:background="@color/white"
                 android:fontFamily="sans-serif-condensed"
                 android:drawableLeft="@drawable/ic_baseline_account_circle_24"
@@ -97,11 +99,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:hint="Email Address"
             android:layout_margin="5dp"
-            android:id="@+id/emailAddress"
+
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailAddress"
                 android:background="@color/white"
                 android:fontFamily="sans-serif-condensed"
                 android:drawableLeft="@drawable/ic_baseline_email_24"
@@ -113,10 +116,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:hint="Phone Number"
             android:layout_margin="5dp"
-            android:id="@+id/phone"
+
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phone"
                 android:fontFamily="sans-serif-condensed"
                 android:background="@color/white"
                 android:drawableLeft="@drawable/ic_baseline_phone_iphone_24"
@@ -126,6 +130,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <Button
+            android:id="@+id/update"
             android:background="@drawable/border_radius"
             android:fontFamily="sans-serif-condensed"
             android:layout_height="wrap_content"

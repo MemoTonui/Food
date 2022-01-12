@@ -20,22 +20,19 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.linda.food.Constants.Constants;
 import com.linda.food.R;
 import com.linda.food.UI.FoodActivity;
-import com.linda.food.models.Business;
+import com.linda.food.models.Restaurant;
 
 import java.util.List;
 
 public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<RestaurantsViewHolder> {
 
     Context context;
-    List<Business> restaurants;
+    List<Restaurant> restaurants;
 
-
-
-    public RestaurantRecyclerAdapter(Context context, List<Business> restaurants) {
+    public RestaurantRecyclerAdapter(Context context, List<Restaurant> restaurants) {
         this.context = context;
         this.restaurants = restaurants;
     }
-
 
     @NonNull
     @Override
@@ -48,14 +45,13 @@ public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<Restaurants
         holder.bind(restaurants.get(position));
     }
 
-
     @Override
     public int getItemCount() {
         return restaurants.size();
     }
 
-    
-} final class RestaurantsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+}
+final class RestaurantsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     ImageView restaurantImage;
     TextView restaurantName;
     TextView restaurantId;
@@ -66,11 +62,13 @@ public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<Restaurants
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+
     public RestaurantsViewHolder(@NonNull View itemView) {
         super(itemView);
         //Shared preferences
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
         editor = sharedPreferences.edit();
+
         restaurantId =itemView.findViewById(R.id.restaurantId);
         restaurantImage = itemView.findViewById(R.id.restaurantImage);
         restaurantName = itemView.findViewById(R.id.restaurantName);
@@ -79,24 +77,24 @@ public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<Restaurants
         restaurantImage.setOnClickListener(this);
     }
 
-    public void bind(final Business business) {
+    public void bind(final Restaurant business) {
         //Picasso.get().load(business.getImage_url()).into(restaurantImage);
-        Glide.with(itemView.getContext()).load(business.getImage_url()).transform(new RoundedCorners(20)).centerCrop().into(restaurantImage);
-        restaurantName.setText(business.getName());
-        restaurantId.setText(String.valueOf(business.getRestaurant_id()));
+        Glide.with(itemView.getContext()).load(business.getRestaurantImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(restaurantImage);
+        restaurantName.setText(business.getRestaurantName());
+        restaurantId.setText(String.valueOf(business.getId()));
 
-        if (isClosed == business.getIsclosed()){
+        if (isClosed == business.getRestaurantStatus()){
             restaurantStatus.setText("Closed");
             restaurantStatus.setTextColor(Color.rgb(200,0,0));
         }else{
             restaurantStatus.setText("Open");
             restaurantStatus.setTextColor(Color.rgb(0,200,100));
         }
-        rating.setRating(business.getRating());
+        rating.setRating(business.getRestaurantRating());
     }
     //Add restaurant id to sharedpreferences
-    private void addRestaurantToSharedPreferences(int restaurant_id){
-        editor.putInt(Constants.PREFERENCES_RESTAURANT_ID,restaurant_id).apply();
+    private void addRestaurantToSharedPreferences(String restaurant_id){
+        editor.putString(Constants.PREFERENCES_RESTAURANT_ID,restaurant_id).apply();
     }
 
     //Add restaurant name to sharedpreferences
@@ -105,8 +103,8 @@ public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<Restaurants
     }
 
     //Add restaurant rating to sharedpreferences
-    private void addRestaurantRatingToSharedPreferences(float rating){
-        editor.putFloat(Constants.PREFERENCES_RESTAURANT_RATING,rating).apply();
+    private void addRestaurantRatingToSharedPreferences(int rating){
+        editor.putInt(Constants.PREFERENCES_RESTAURANT_RATING,rating).apply();
     }
 
     //Add restaurant image url to sharedpreferences
@@ -117,10 +115,9 @@ public class RestaurantRecyclerAdapter  extends RecyclerView.Adapter<Restaurants
     public void onClick(View v) {
         if (v == restaurantImage) {
             Intent intent = new Intent(itemView.getContext(), FoodActivity.class);
-            addRestaurantToSharedPreferences(Integer.parseInt(restaurantId.getText().toString()));
+            addRestaurantToSharedPreferences(restaurantId.getText().toString());
             addRestaurantNameToSharedPreferences(restaurantName.getText().toString());
-            addRestaurantRatingToSharedPreferences(rating.getRating());
-
+            addRestaurantRatingToSharedPreferences((int) rating.getRating());
             itemView.getContext().startActivity(intent);
         }
     }

@@ -17,42 +17,39 @@ import com.linda.food.models.Food;
 
 import java.util.List;
 
-public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapter.CartViewHolder> {
+public class CheckoutRecyclerAdapter extends RecyclerView.Adapter<CheckoutRecyclerAdapter.CheckoutViewHolder> {
     Context context;
     List<Food> foodList;
 
-    public CartRecyclerAdapter(Context context, List<Food> foodList) {
+    public CheckoutRecyclerAdapter(Context context, List<Food> foodList) {
         this.context = context;
         this.foodList = foodList;
     }
 
     @NonNull
     @Override
-    public CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new CartRecyclerAdapter.CartViewHolder(LayoutInflater.from(context).inflate(R.layout.individual_cart_product,parent,false));
+    public CheckoutRecyclerAdapter.CheckoutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new CheckoutRecyclerAdapter.CheckoutViewHolder(LayoutInflater.from(context).inflate(R.layout.individual_checkout_product,parent,false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartRecyclerAdapter.CartViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CheckoutRecyclerAdapter.CheckoutViewHolder holder, int position) {
         final Food food = foodList.get(position);
         holder.bind(food);
     }
 
     @Override
     public int getItemCount() {
-        if (foodList.size()>0) {
-            return foodList.size();
-        }
-        return 0;
+        return foodList.size() ;
     }
 
-    public static final class CartViewHolder extends RecyclerView.ViewHolder {
+    public static final class CheckoutViewHolder extends RecyclerView.ViewHolder {
         ImageView foodImage;
         TextView foodName;
         TextView foodPrice;
         TextView quantity;
 
-        public CartViewHolder(@NonNull View itemView) {
+        public CheckoutViewHolder(@NonNull View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.food_name);
             foodPrice = itemView.findViewById(R.id.food_price);
@@ -63,7 +60,7 @@ public class CartRecyclerAdapter extends RecyclerView.Adapter<CartRecyclerAdapte
         public void bind(Food food) {
             foodName.setText(food.getFoodName());
             foodPrice.setText(String.valueOf(food.getFoodPrice()));
-            Glide.with(itemView.getContext()).load(food.getFoodPrice()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
+            Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
         }
     }
-    }
+}

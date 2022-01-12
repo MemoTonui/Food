@@ -2,7 +2,9 @@ package com.linda.food.UI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.linda.food.Constants.Constants;
 import com.linda.food.R;
 
 
@@ -42,6 +45,9 @@ public class RegistrationTabFragment extends Fragment implements View.OnClickLis
     public static final String TAG =RegistrationTabFragment.class.getSimpleName();
     private String mName;
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     float v = 0;
 
     @Nullable
@@ -58,6 +64,9 @@ public class RegistrationTabFragment extends Fragment implements View.OnClickLis
         haveAnAccount = root.findViewById(R.id.haveAnAccount);
         //set onClick Lister
         registerButton.setOnClickListener(this::onClick);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(root.getContext());
+        editor = sharedPreferences.edit();
 
         //Instantiate FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
@@ -117,12 +126,18 @@ public class RegistrationTabFragment extends Fragment implements View.OnClickLis
     }
 
     private boolean register(){
-        String myUsername = username.getText().toString().trim();
+        String myUsername = username.getText().toString();
         String myEmail = email.getText().toString().trim();
         String pass = password.getText().toString().trim();
         String confirmPass = confirmPassword.getText().toString().trim();
         String phoneNumber = phone.getText().toString().trim();
-        String myFullName = fullName.getText().toString().trim();
+        String myFullName = fullName.getText().toString();
+
+        addUserEmailToSharedPreferences(myEmail);
+        System.out.println("HEEEEEEEEEEEERRRRRRRRREEEEEEEEEE"+ myEmail);
+        addUserFullNameToSharedPreferences(myFullName);
+        addUserNameToSharedPreferences(myUsername);
+        addUserPhoneNumberToSharedPreferences(phoneNumber);
 
         if(myUsername.equals("")){
             username.setError("Please Input a Username");
@@ -157,6 +172,8 @@ public class RegistrationTabFragment extends Fragment implements View.OnClickLis
                 Log.d(TAG, "createAccountWithEmailComplete" + task.isSuccessful());
                 Toast.makeText(getContext(), "Authentication Successful", Toast.LENGTH_LONG).show();
 
+
+
                 if (!task.isSuccessful()) {
                     Log.w(TAG, "createAccountWithEmail", task.getException());
                     Toast.makeText(getContext(), "Authentication Failed", Toast.LENGTH_LONG).show();
@@ -176,17 +193,32 @@ public class RegistrationTabFragment extends Fragment implements View.OnClickLis
             confirmPassword.setError("This doesn't match your password ");
         }
     }
+    private void addUserNameToSharedPreferences(String username){
+        editor.putString(Constants.PREFERENCES_USER_NAME,username).apply();
+    }
+
+    private void addUserEmailToSharedPreferences(String email){
+        editor.putString(Constants.PREFERENCES_USER_EMAIL,email).apply();
+    }
+
+    private void addUserPhoneNumberToSharedPreferences(String phone){
+        editor.putString(Constants.PREFERENCES_PHONE_NUMBER,phone).apply();
+    }
+    private void addUserFullNameToSharedPreferences(String fullName){
+        editor.putString(Constants.PREFERENCES_FULL_NAME,fullName).apply();
+    }
     @Override
     public void onClick(View view) {
         if(view == registerButton){
           if(register()) {
-              startActivity(new Intent(getContext(), MainActivity.class));
+              startActivity(new Intent(getContext(), ProfileSetup.class));
           }
         else {
             return;
           }
         }
     }
+
     @Override
     public void onStart(){
         super.onStart();

@@ -25,7 +25,7 @@ import com.linda.food.Network.FoodzillaClient;
 import com.linda.food.Network.FoodzillaService;
 import com.linda.food.R;
 import com.linda.food.adapters.RestaurantRecyclerAdapter;
-import com.linda.food.models.Business;
+import com.linda.food.models.Restaurant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.favorites) ImageView favorites;
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    List<Business> restaurants = new ArrayList<>();
+    List<Restaurant> restaurants = new ArrayList<>();
 
 
 
@@ -69,7 +69,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Gets name of the current user of the application
         firebaseAuth = FirebaseAuth.getInstance();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if(firebaseUser != null){
+            //name.setText();
+            name.setText("Hello"+ firebaseUser.getDisplayName()+"&#128522;");
+        }
+       /* authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     name.setText("Hello"+ firebaseUser.getDisplayName()+"&#128522;");
                 }
             }
-        };
+        };*/
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,16 +104,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //Implementation of Yelp Service
         FoodzillaService client = FoodzillaClient.getClient();
-        Call<List<Business>> call =client.getAllBusinesses();
+        Call<List<Restaurant>> call =client.getAllRestaurants();
 
 
 
-        call.enqueue(new Callback<List<Business>>() {
+        call.enqueue(new Callback<List<com.linda.food.models.Restaurant>>() {
             @Override
-            public void onResponse(Call<List<Business>> call, Response<List<Business>> response) {
+            public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
                 if (response.isSuccessful()){
                     hideProgressBar();
-                    List<Business> body = response.body();
+                    List<Restaurant> body = response.body();
                     if(body == null){
                        Log.d(TAG,"Hapa Hakuna Kitu") ;
                        failure.setText("There are no restaurants here");
@@ -116,10 +121,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }else {
                         restaurants.addAll(body);
                         recyclerAdapter = new RestaurantRecyclerAdapter(MainActivity.this, restaurants);
-                        recyclerView.setAdapter(recyclerAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setHasFixedSize(true);
+                        recyclerView.setAdapter(recyclerAdapter);
+
                     }
                 }
                 else {
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             @Override
-            public void onFailure(Call<List<Business>> call, Throwable t) {
+            public void onFailure(Call<List<Restaurant>> call, Throwable t) {
                 hideProgressBar();
                 showFailureMessage();
                 Log.d(TAG,"On Failure",t);

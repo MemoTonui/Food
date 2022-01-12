@@ -54,8 +54,8 @@ public class FoodActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.addToCart) ImageView addToCart;
     private SharedPreferences sharedPreferences;
-    int restaurant_id;
-    float rating;
+    String restaurant_id;
+    int rating;
 
     String restaurantName;
     //Firebase
@@ -88,9 +88,9 @@ public class FoodActivity extends AppCompatActivity {
 
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(FoodActivity.this);
-        rating = sharedPreferences.getFloat(Constants.PREFERENCES_RESTAURANT_RATING,-1);
+        rating = sharedPreferences.getInt(Constants.PREFERENCES_RESTAURANT_RATING,-1);
         restaurantName = sharedPreferences.getString(Constants.PREFERENCES_RESTAURANT_NAME, null);
-        restaurant_id= sharedPreferences.getInt(Constants.PREFERENCES_RESTAURANT_ID,-1);
+        restaurant_id= sharedPreferences.getString(Constants.PREFERENCES_RESTAURANT_ID,null);
         FoodzillaService client = FoodzillaClient.getClient();
         Call <List<Food>> call = client.getFoodsInARestaurant(restaurant_id);
 
@@ -122,15 +122,13 @@ public class FoodActivity extends AppCompatActivity {
                         }, new FoodRecyclerAdapter.ClickAddToFavoritesListener() {
                             @Override
                             public void onClickAddToFavorites(ImageView addToFavorites, Food food) {
-                               saveFavoriteToFirebase(food.getFood_id(),food.getFood_name(),food.getFood_rating(),food.getFood_image(),food.getRestaurant_id(),food.getFood_price());
-
+                                saveFavoriteToFirebase(food.getId(),food.getFoodName(),food.getFoodRating(),food.getFoodImgUrl(),food.getRestaurant(),food.getFoodPrice());
                                 food.setAddedToFavorites(true);
                                 addToFavorites.setImageResource(R.drawable.ic_vector__1_);
                                 foodRecyclerAdapter.notifyDataSetChanged();
                             }
 
                         });
-
                         foodRecyclerView.setAdapter(foodRecyclerAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(FoodActivity.this);
                         foodRecyclerView.setLayoutManager(layoutManager);
@@ -158,18 +156,18 @@ public class FoodActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
     }
-    private void saveFavoriteToFirebase(int food_id, String food_name, float food_rating, String food_image, int restaurant_id, int food_price ){
+    private void saveFavoriteToFirebase(String food_id, String food_name, int food_rating, String food_image, String restaurant_id, int food_price ){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userId = user.getUid();
-        Food myFood = new Food(food_id,food_name,food_rating,food_image,restaurant_id,food_price);
-
+        Food myFood = new Food();
+        myFood.setFoodName(food_name);
+        myFood.setId(food_id);
+        myFood.setFoodRating(food_rating);
+        myFood.setFoodImgUrl(food_image);
+        myFood.setRestaurant(restaurant_id);
+        myFood.setFoodPrice(food_price);
         food.push().setValue(myFood);
         Toast.makeText(FoodActivity.this, "Added to Favorites", Toast.LENGTH_LONG).show();
-
-
-
-
-
     }
     private void showUnSuccessfulMessage(){
         failure.setText("Sorry you do not have Internet Access! Please Try Again Later");

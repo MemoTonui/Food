@@ -65,10 +65,10 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
         }
 
         public void bind(Food food) {
-            foodName.setText(food.getFood_name());
-            foodPrice.setText(String.valueOf(food.getFood_price()));
-            rating.setRating(food.getFood_rating());
-            Glide.with(itemView.getContext()).load(food.getFood_image()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
+            foodName.setText(food.getFoodName());
+            foodPrice.setText(String.valueOf(food.getFoodPrice()));
+            rating.setRating(food.getFoodRating());
+            Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
 
         }
     }

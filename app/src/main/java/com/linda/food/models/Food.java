@@ -1,33 +1,124 @@
+
 package com.linda.food.models;
 
-public class Food {
-    private int food_id;
-    private String food_name;
-    private float food_rating;
-    private String food_image;
-    private int restaurant_id;
-    private int food_price;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+import javax.annotation.Generated;
+
+@Generated("jsonschema2pojo")
+public class Food implements Serializable
+{
+
+    @SerializedName("foodPrice")
+    @Expose
+    private Integer foodPrice;
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("foodName")
+    @Expose
+    private String foodName;
+    @SerializedName("foodRating")
+    @Expose
+    private Integer foodRating;
+    @SerializedName("foodImgUrl")
+    @Expose
+    private String foodImgUrl;
+    @SerializedName("restaurant")
+    @Expose
+    private String restaurant;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
     private Boolean isAddedToCart =false;
     private Boolean isAddedToFavorites = false;
+    private final static long serialVersionUID = 5812465384064518323L;
 
-    public Food(int food_id, String food_name, float food_rating, String food_image, int restaurant_id, int food_price) {
-        this.food_id = food_id;
-        this.food_name = food_name;
-        this.food_rating = food_rating;
-        this.food_image = food_image;
-        this.restaurant_id = restaurant_id;
-        this.food_price = food_price;
-    }
-    public Food(){
-
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public Food() {
     }
 
-    public Boolean getAddedToFavorites() {
-        return isAddedToFavorites;
+    /**
+     *
+     * @param foodPrice
+     * @param foodRating
+     * @param foodName
+     * @param v
+     * @param restaurant
+     * @param foodImgUrl
+     * @param id
+     */
+    public Food(Integer foodPrice, String id, String foodName, Integer foodRating, String foodImgUrl, String restaurant, Integer v) {
+        super();
+        this.foodPrice = foodPrice;
+        this.id = id;
+        this.foodName = foodName;
+        this.foodRating = foodRating;
+        this.foodImgUrl = foodImgUrl;
+        this.restaurant = restaurant;
+        this.v = v;
     }
 
-    public void setAddedToFavorites(Boolean addedToFavorites) {
-        isAddedToFavorites = addedToFavorites;
+    public Integer getFoodPrice() {
+        return foodPrice;
+    }
+
+    public void setFoodPrice(Integer foodPrice) {
+        this.foodPrice = foodPrice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public Integer getFoodRating() {
+        return foodRating;
+    }
+
+    public void setFoodRating(Integer foodRating) {
+        this.foodRating = foodRating;
+    }
+
+    public String getFoodImgUrl() {
+        return foodImgUrl;
+    }
+
+    public void setFoodImgUrl(String foodImgUrl) {
+        this.foodImgUrl = foodImgUrl;
+    }
+
+    public String getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(String restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
     }
 
     public Boolean getAddedToCart() {
@@ -38,51 +129,11 @@ public class Food {
         isAddedToCart = addedToCart;
     }
 
-    public int getFood_id() {
-        return food_id;
+    public Boolean getAddedToFavorites() {
+        return isAddedToFavorites;
     }
 
-    public void setFood_id(int food_id) {
-        this.food_id = food_id;
-    }
-
-    public String getFood_name() {
-        return food_name;
-    }
-
-    public void setFood_name(String food_name) {
-        this.food_name = food_name;
-    }
-
-    public float getFood_rating() {
-        return food_rating;
-    }
-
-    public void setFood_rating(float food_rating) {
-        this.food_rating = food_rating;
-    }
-
-    public String getFood_image() {
-        return food_image;
-    }
-
-    public void setFood_image(String food_image) {
-        this.food_image = food_image;
-    }
-
-    public int getRestaurant_id() {
-        return restaurant_id;
-    }
-
-    public void setRestaurant_id(int restaurant_id) {
-        this.restaurant_id = restaurant_id;
-    }
-
-    public int getFood_price() {
-        return food_price;
-    }
-
-    public void setFood_price(int food_price) {
-        this.food_price = food_price;
+    public void setAddedToFavorites(Boolean addedToFavorites) {
+        isAddedToFavorites = addedToFavorites;
     }
 }
