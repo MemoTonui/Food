@@ -1,20 +1,21 @@
 {
   "project_info": {
-    "project_number": "841516983734",
-    "project_id": "foodzilla-6e581",
-    "storage_bucket": "foodzilla-6e581.appspot.com"
+    "project_number": "858963945423",
+    "firebase_url": "https://foodzilla-c3486-default-rtdb.firebaseio.com",
+    "project_id": "foodzilla-c3486",
+    "storage_bucket": "foodzilla-c3486.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:841516983734:android:486415688a0df49b4f0d17",
+        "mobilesdk_app_id": "1:858963945423:android:060357d833936d510014ba",
         "android_client_info": {
           "package_name": "com.linda.food"
         }
       },
       "oauth_client": [
         {
-          "client_id": "841516983734-urvfv66nkfp79i35v8l7n3s2cu13mrc5.apps.googleusercontent.com",
+          "client_id": "858963945423-8i4n526uibcf5g6jor26nrj27p2vs9oh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.linda.food",
@@ -22,20 +23,20 @@
           }
         },
         {
-          "client_id": "841516983734-8b3vj1c3m40k8mhpn3nk9cltph285efb.apps.googleusercontent.com",
+          "client_id": "858963945423-ot13kad2j799jemv1q0jqbrhramc6cji.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAMAL5bdqan9-w9RXLfVIDMw1ebeqnngho"
+          "current_key": "AIzaSyBXspZLhDBP_qg5DF2FDCcoShovFJrjiy8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "841516983734-8b3vj1c3m40k8mhpn3nk9cltph285efb.apps.googleusercontent.com",
+              "client_id": "858963945423-ot13kad2j799jemv1q0jqbrhramc6cji.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

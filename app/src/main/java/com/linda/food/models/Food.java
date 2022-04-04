@@ -21,6 +21,9 @@ public class Food implements Serializable
     @SerializedName("foodName")
     @Expose
     private String foodName;
+    @SerializedName("foodDescription")
+    @Expose
+    private String foodDescription;
     @SerializedName("foodRating")
     @Expose
     private Integer foodRating;
@@ -30,6 +33,12 @@ public class Food implements Serializable
     @SerializedName("restaurant")
     @Expose
     private String restaurant;
+    private Integer quantity;
+    private Integer total;
+    private Integer subTotal;
+    private Integer deliveryCost;
+    private String latitude;
+    private String longitude;
     @SerializedName("__v")
     @Expose
     private Integer v;
@@ -54,7 +63,7 @@ public class Food implements Serializable
      * @param foodImgUrl
      * @param id
      */
-    public Food(Integer foodPrice, String id, String foodName, Integer foodRating, String foodImgUrl, String restaurant, Integer v) {
+    public Food(Integer foodPrice, String id, String foodName, Integer foodRating, String foodImgUrl, String restaurant,Integer quantity, Integer v) {
         super();
         this.foodPrice = foodPrice;
         this.id = id;
@@ -62,6 +71,7 @@ public class Food implements Serializable
         this.foodRating = foodRating;
         this.foodImgUrl = foodImgUrl;
         this.restaurant = restaurant;
+        this.quantity = quantity;
         this.v = v;
     }
 
@@ -135,5 +145,61 @@ public class Food implements Serializable
 
     public void setAddedToFavorites(Boolean addedToFavorites) {
         isAddedToFavorites = addedToFavorites;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getDeliveryCost() {
+        return deliveryCost;
+    }
+
+    public void setDeliveryCost(Integer deliveryCost) {
+        this.deliveryCost = deliveryCost;
+    }
+
+    public Integer getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(Integer subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getFoodDescription() {
+        return foodDescription;
+    }
+
+    public void setFoodDescription(String foodDescription) {
+        this.foodDescription = foodDescription;
     }
 }

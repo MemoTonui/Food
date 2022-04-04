@@ -37,8 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/food_image"
-
-                    android:fontFamily="sans-serif-condensed"
+                    android:fontFamily="@font/poppins"
                     android:text="Food Number 1"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
@@ -50,9 +49,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@id/food_image"
-                    android:fontFamily="sans-serif-condensed"
+                    android:fontFamily="@font/poppins"
                     android:text="Ksh 2000"
-                    android:textColor="@color/black"
+
                     android:textSize="17sp" />
 
 
@@ -72,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/food_price"
                     android:layout_marginHorizontal="5dp"
+                    android:fontFamily="@font/poppins"
                     android:layout_marginTop="80dp"
                     android:layout_toRightOf="@id/plus"
                     android:padding="2dp"
@@ -89,6 +89,7 @@
 
 
                 <ImageView
+                    android:id="@+id/delete"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_below="@id/food_price"

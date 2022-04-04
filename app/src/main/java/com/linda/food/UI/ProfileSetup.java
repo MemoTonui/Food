@@ -1,6 +1,5 @@
 package com.linda.food.UI;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,14 +16,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.drjacky.imagepicker.ImagePicker;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -47,22 +44,33 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.linda.food.Constants.Constants.IMAGE_REQUEST;
+
 public class ProfileSetup extends AppCompatActivity implements View.OnClickListener {
+    @BindView (R.id.firstName) EditText firstName;
+    @BindView (R.id.lastName) EditText lastName;
+    @BindView (R.id.username) EditText username;
+    @BindView (R.id.email) EditText emailAddress;
     @BindView(R.id.profilePic) ImageView profilePic;
     @BindView(R.id.fab)  FloatingActionButton fab;
     @BindView(R.id.save) Button save;
-    @BindView(R.id.location) EditText location;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
     private static final int ERROR_DIALOG_REQUEST = 9001;
+    private static final String TAG = ProfileSetup.class.getSimpleName();
+
+
     String fullName;
     String phone;
     String email;
-    String username;
-    String myLocation;
+    String myUsername;
+    String firebaseUid;
+
     Uri filePath;
     String imgUrl;
+
 
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -80,12 +88,12 @@ public class ProfileSetup extends AppCompatActivity implements View.OnClickListe
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
+
+
+        //Onclick listeners
         fab.setOnClickListener(this);
         save.setOnClickListener(this);
-        location.setOnClickListener(this);
-        if (isServicesOkay()){
-            init();
-        }
+
 
     }
 
@@ -93,21 +101,34 @@ public class ProfileSetup extends AppCompatActivity implements View.OnClickListe
         startActivity(new Intent(ProfileSetup.this,MapActivity.class));
     }
     private void setupProfile(){
-        fullName = sharedPreferences.getString(Constants.PREFERENCES_FULL_NAME, null);
+        fullName = firstName.getText().toString()+ " " + lastName.getText().toString();
         phone = sharedPreferences.getString(Constants.PREFERENCES_PHONE_NUMBER, null);
-        email = sharedPreferences.getString(Constants.PREFERENCES_USER_EMAIL, null);
-        username = sharedPreferences.getString(Constants.PREFERENCES_USER_NAME, null);
-        myLocation = location.getText().toString();
+        email = emailAddress.getText().toString();
+        myUsername = username.getText().toString();
+        firebaseUid = sharedPreferences.getString(Constants.PREFERENCES_FIREBASE_USER_ID, null);
+        if (fullName.isEmpty()){
+            firstName.setError("Please Enter Your First Name");
+        }
+            else if (email.isEmpty()){
+                emailAddress.setError("Please Enter Your Email");
+            }
+        else
+        if (myUsername.isEmpty()){
+            username.setError("Please Enter Your User Name");
+        }
 
-        User user = new User();
-        user.setEmail(email);
-        user.setImgUrl(imgUrl);
-        user.setUsername(username);
-        user.setPhoneNumber(phone);
-        user.setFullName(fullName);
-        user.setLocation(myLocation);
+            User user = new User();
+            user.setEmail(email);
+            user.setImgUrl(imgUrl);
+            user.setUsername(myUsername);
+            user.setPhoneNumber(phone);
+            user.setFullName(fullName);
+            user.setFirebaseUid(firebaseUid);
 
         FoodzillaService service = FoodzillaClient.getClient();
+        ProgressDialog pd = new ProgressDialog(ProfileSetup.this);
+        pd.setMessage("Please Wait...");
+        pd.show();
         Call<User> userCall = service.createUser(user);
         userCall.enqueue(new Callback<User>() {
             @Override
@@ -116,35 +137,67 @@ public class ProfileSetup extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(ProfileSetup.this,"Profile created", Toast.LENGTH_LONG).show();
                     addUserIdToPreferences(response.body().getId());
                     startActivity(new Intent(ProfileSetup.this, MainActivity.class));
+                    pd.hide();
                 }
                 else {
-                    Toast.makeText(ProfileSetup.this,"Unable to create Profile", Toast.LENGTH_LONG).show();
+                    FoodzillaService client = FoodzillaClient.getClient();
+                    Call<User> phoneCall = client.getUserByPhoneNumber(phone);
+                    phoneCall.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if (response.isSuccessful()){
+                                User user = response.body();
+                                System.out.println("HERRREEEEEEEEEEEEEEEEEEEEEE" + user.getId());
+                                addUserIdToPreferences(user.getId());
+                                user.setFirebaseUid(firebaseUid);
+                                FoodzillaService myService = FoodzillaClient.getClient();
+                                Call<User> myCall = myService.updateUser(user.getId(), user);
+                                myCall.enqueue(new Callback<User>() {
+                                    @Override
+                                    public void onResponse(Call<User> call, Response<User> response) {
+                                        if (response.isSuccessful()){
+                                            Toast.makeText(getApplicationContext(),"Update Successful", Toast.LENGTH_LONG).show();
+                                            pd.hide();
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(),"Please try again later", Toast.LENGTH_LONG).show();
 
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<User> call, Throwable t) {
+                                        Toast.makeText(getApplicationContext(),"Please check your internet connection", Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+
+                        }
+                    });
+                    Toast.makeText(ProfileSetup.this,"You already have a profile", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(ProfileSetup.this, MainActivity.class));
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(ProfileSetup.this,"Please Check Your Internet Connection", Toast.LENGTH_LONG).show();
-
+                pd.hide();
             }
         });
     }
 
-    @Override
+  /*  @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        filePath = data.getData();
-        //imgUrl = uri.getPath();
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
-            Glide.with(getApplicationContext()).load(bitmap).apply(RequestOptions.circleCropTransform()).into(profilePic);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        uploadImage();
-    }
+    }*/
+
 
     // UploadImage method
     private void uploadImage() {
@@ -221,35 +274,38 @@ public class ProfileSetup extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if (v== fab){
-            ImagePicker.Companion.with(ProfileSetup.this).start();
+            ImagePicker.Companion.with(ProfileSetup.this).start(IMAGE_REQUEST);
+
         }
         if (v == save){
             setupProfile();
         }
-        if (v == location){
 
-        }
     }
     private void addUserIdToPreferences(String id){
         editor.putString(Constants.PREFERENCES_USER_ID,id).apply();
     }
 
-    public boolean isServicesOkay() {
-        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(ProfileSetup.this);
 
-        if (available == ConnectionResult.SUCCESS){
-            //Everything is okay
-            return true;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: called.");
+
+        switch (requestCode) {
+            case IMAGE_REQUEST:{
+                filePath = data.getData();
+                //imgUrl = uri.getPath();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                    Glide.with(getApplicationContext()).load(bitmap).apply(RequestOptions.circleCropTransform()).into(profilePic);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                uploadImage();
+            }
         }
-        else  if(GoogleApiAvailability.getInstance().isUserResolvableError(available)){
-            //There's a problem and it can be fixed
-            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(ProfileSetup.this,available,ERROR_DIALOG_REQUEST);
-            dialog.show();
-        }
-        else {
-            //Can'tresolve this error
-            Toast.makeText(getApplicationContext(),"Your device is not compatible", Toast.LENGTH_LONG).show();
-        }
-        return false;
+
     }
 }

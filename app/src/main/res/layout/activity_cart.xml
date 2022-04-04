@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".UI.Cart">
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/pinkish"
         android:visibility="gone"
+        android:fontFamily="@font/poppins"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:padding="15dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/poppins"
+
         android:text="Proceed to checkout"
         android:background="@drawable/border_radius"
         app:layout_constraintBottom_toBottomOf="parent"

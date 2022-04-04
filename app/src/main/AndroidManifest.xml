@@ -1,55 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.linda.food"
     android:hardwareAccelerated="false"
     android:largeHeap="true">
-
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
 
     <application
+        android:name=".UI.App"
         android:allowBackup="true"
         android:icon="@mipmap/favicon"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/favicon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Design.Light.NoActionBar">
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_api_key"/>
+        android:theme="@style/Theme.Design.Light.NoActionBar"
+        android:usesCleartextTraffic="true"
+        tools:node="merge">
+        <activity android:name=".UI.IndividualFood" android:theme="@style/Theme.Food" android:parentActivityName=".UI.FoodActivity"></activity>
+        <activity android:name=".UI.FailedActivity" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".UI.MapActivity"></activity>
+        <activity
+            android:name=".UI.GoogleMapsActivity"
+            android:label="@string/title_activity_google_maps" />
+        <activity android:name=".UI.OTPActivity" />
+        <activity android:name=".UI.SignUpActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".UI.MapActivity"
+            android:theme="@style/Theme.Design.NoActionBar" />
         <activity android:name=".UI.ProfileSetup" />
         <activity android:name=".UI.Success" />
         <activity android:name=".UI.Summary" />
         <activity
             android:name=".UI.Checkout"
+            android:parentActivityName=".UI.Cart"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.Support"
             android:label="Support"
+            android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.Profile"
             android:label="Profile"
+            android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.Cart"
             android:label="Cart"
+            android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.Favorites"
             android:label="Favorites"
+            android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.Orders"
             android:label="My Orders"
+            android:parentActivityName=".UI.MainActivity"
             android:theme="@style/Theme.Food" />
         <activity
             android:name=".UI.FoodActivity"
@@ -61,8 +103,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.Login" />
         <activity android:name=".UI.MainActivity" />
+
+        <service android:name=".Network.FirebasePushNotificationClass" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

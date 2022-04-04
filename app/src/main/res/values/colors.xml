@@ -5,4 +5,5 @@
     <color name="rain">#2C7873</color>
     <color name="black">#021C1E</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="back">#FAFBFF</color>
 </resources>

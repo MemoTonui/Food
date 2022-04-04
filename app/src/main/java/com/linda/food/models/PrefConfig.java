@@ -23,6 +23,29 @@ public class PrefConfig {
         editor.apply();
     }
 
+    public static  void deleteInPref(Context context, Food food){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(food);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.remove(LIST_KEY);
+        editor.commit();
+
+    }
+    public static  void ClearInPref(Context context, List<Food> food){
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(food);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.clear();
+        editor.commit();
+
+    }
+
+
     public  static List<Food> readListFromPref(Context context){
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String jsonString = sharedPreferences.getString(LIST_KEY,"");

@@ -1,5 +1,6 @@
 package com.linda.food.UI;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -91,8 +92,16 @@ public class FoodActivity extends AppCompatActivity {
         rating = sharedPreferences.getInt(Constants.PREFERENCES_RESTAURANT_RATING,-1);
         restaurantName = sharedPreferences.getString(Constants.PREFERENCES_RESTAURANT_NAME, null);
         restaurant_id= sharedPreferences.getString(Constants.PREFERENCES_RESTAURANT_ID,null);
+
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FoodActivity.this, Cart.class));
+            }
+        });
         FoodzillaService client = FoodzillaClient.getClient();
         Call <List<Food>> call = client.getFoodsInARestaurant(restaurant_id);
+
 
         call.enqueue(new Callback<List<Food>>() {
             @Override

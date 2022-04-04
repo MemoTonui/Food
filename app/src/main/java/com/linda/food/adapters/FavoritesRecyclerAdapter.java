@@ -66,7 +66,7 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
 
         public void bind(Food food) {
             foodName.setText(food.getFoodName());
-            foodPrice.setText(String.valueOf(food.getFoodPrice()));
+            foodPrice.setText("Ksh. "+String.valueOf(food.getFoodPrice()));
             rating.setRating(food.getFoodRating());
             Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
 

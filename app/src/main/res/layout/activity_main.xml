@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back"
     android:fitsSystemWindows="true"
     tools:context=".UI.MainActivity"
     tools:openDrawer="start">
@@ -44,10 +43,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:fontFamily="sans-serif-condensed"
-            android:text=" Hello Linda "
+            android:fontFamily="@font/poppins"
+            android:text=" Hello "
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="23dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,24 +55,38 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0" />
 
-        <EditText
-            android:id="@+id/search"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/edit_text_bg"
-            android:drawableStart="@drawable/ic_baseline_search_24"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Search"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="30dp"
+            android:textSize="13dp"
+            android:fontFamily="@font/poppins"
+            android:layout_marginLeft="20dp"
+            android:text="Where do you want your food from today?"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="@+id/name"
             app:layout_constraintHorizontal_bias="0.149"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toBottomOf="@+id/name"
-            app:layout_constraintVertical_bias="0.001"
-            app:layout_constraintWidth_percent=".9" />
+            />
 
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/text"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:hint="Search"
+            android:padding="10dp"
+            android:fontFamily="@font/poppins"
+            android:background="@drawable/edit_text_bg"
+            app:layout_constraintStart_toStartOf="@+id/text"
+            app:layout_constraintTop_toBottomOf="@+id/text"/>
 
         <ImageView
             android:id="@+id/cart"
@@ -109,6 +122,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/pinkish"
+            android:fontFamily="@font/poppins"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"

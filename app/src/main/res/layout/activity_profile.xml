@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back"
     android:orientation="vertical"
     tools:context=".UI.Profile">
    <RelativeLayout
@@ -26,14 +27,14 @@
            android:layout_centerVertical="true"
            android:layout_marginLeft="10dp"
            android:layout_toRightOf="@+id/profile_image"
-           android:fontFamily="sans-serif-condensed"
+           android:fontFamily="@font/poppins"
            android:includeFontPadding="false"
-           android:text="Taimoor Sikander"
+           android:text="John Jane Doe"
            android:textColor="@color/white"
            android:textSize="20sp" />
 
        <TextView
-           android:fontFamily="sans-serif-condensed"
+           android:fontFamily="@font/poppins"
            android:id="@+id/email"
            android:layout_width="wrap_content"
            android:textColor="@color/white"
@@ -42,7 +43,7 @@
            android:layout_marginLeft="10dp"
            android:layout_toRightOf="@+id/profile_image"
            android:includeFontPadding="false"
-           android:text="tonuilinda@gmail.com"
+           android:text="johnjanedoe@gmail.com"
            android:textSize="14sp" />
 
    </RelativeLayout>
@@ -65,7 +66,6 @@
     <com.google.android.material.textfield.TextInputLayout
         android:hint="Full Name"
         android:layout_margin="5dp"
-
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
@@ -73,7 +73,7 @@
             android:id="@+id/full_name_profile"
             android:background="@color/white"
             android:drawableLeft="@drawable/ic_baseline_account_circle_24"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="@font/poppins"
             android:drawablePadding="10dp"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />
@@ -89,7 +89,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
                 android:background="@color/white"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/poppins"
                 android:drawableLeft="@drawable/ic_baseline_account_circle_24"
                 android:drawablePadding="10dp"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailAddress"
                 android:background="@color/white"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/poppins"
                 android:drawableLeft="@drawable/ic_baseline_email_24"
                 android:drawablePadding="10dp"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_width="match_parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/poppins"
                 android:background="@color/white"
                 android:drawableLeft="@drawable/ic_baseline_phone_iphone_24"
                 android:drawablePadding="10dp"
@@ -132,9 +132,10 @@
         <Button
             android:id="@+id/update"
             android:background="@drawable/border_radius"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="@font/poppins"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:text="UPDATE" />
 

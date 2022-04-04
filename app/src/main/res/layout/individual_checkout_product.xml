@@ -38,7 +38,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/food_image"
 
-                    android:fontFamily="sans-serif-condensed"
+                    android:fontFamily="@font/poppins"
                     android:text="Food Number 1"
                     android:textColor="@color/black"
                     android:textSize="17sp" />
@@ -50,11 +50,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@id/food_image"
-                    android:fontFamily="sans-serif-condensed"
+                    android:fontFamily="@font/poppins"
                     android:text="Ksh 2000"
-                    android:textColor="@color/black"
                     android:textSize="17sp" />
-
 
                 <ImageView
                     android:id="@+id/plus"
@@ -67,7 +65,7 @@
                     android:src="@drawable/ic_baseline_control_point_24" />
 
                 <TextView
-                    android:id="@+id/quantity"
+                    android:id="@+id/food_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/food_price"
@@ -75,6 +73,7 @@
                     android:layout_marginTop="80dp"
                     android:layout_toRightOf="@id/plus"
                     android:padding="2dp"
+                    android:fontFamily="@font/poppins"
                     android:text="1"
                     android:textColor="@color/black" />
 
@@ -84,18 +83,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/food_price"
                     android:layout_marginTop="80dp"
-                    android:layout_toRightOf="@id/quantity"
+                    android:layout_toRightOf="@id/food_quantity"
                     android:src="@drawable/ic_baseline_remove_circle_outline_24" />
-
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_below="@id/food_price"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_toRightOf="@id/minus"
-                    android:src="@drawable/ic_baseline_delete_forever_24" />
 
 
             </RelativeLayout>

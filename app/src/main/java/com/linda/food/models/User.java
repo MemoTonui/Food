@@ -30,6 +30,9 @@ public class User implements Serializable
     @SerializedName("phoneNumber")
     @Expose
     private String phoneNumber;
+    @SerializedName("firebaseUid")
+    @Expose
+    private String firebaseUid;
     @SerializedName("email")
     @Expose
     private String email;
@@ -48,6 +51,19 @@ public class User implements Serializable
     public User() {
     }
 
+    public User(String location, String imgUrl, String id, String username, String fullName, String phoneNumber, String firebaseUid, String email, List<Object> orders, Integer v) {
+        this.location = location;
+        this.imgUrl = imgUrl;
+        this.id = id;
+        this.username = username;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.firebaseUid = firebaseUid;
+        this.email = email;
+        this.orders = orders;
+        this.v = v;
+    }
+
     /**
      *
      * @param imgUrl
@@ -59,17 +75,8 @@ public class User implements Serializable
      * @param id
      * @param email
      */
-    public User(String location, String imgUrl, String id, String name, String phoneNumber, String email, List<Object> orders, Integer v) {
-        super();
-        this.location = location;
-        this.imgUrl = imgUrl;
-        this.id = id;
-        this.username = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.orders = orders;
-        this.v = v;
-    }
+
+
 
     public String getLocation() {
         return location;
@@ -141,5 +148,13 @@ public class User implements Serializable
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getFirebaseUid() {
+        return firebaseUid;
+    }
+
+    public void setFirebaseUid(String firebaseUid) {
+        this.firebaseUid = firebaseUid;
     }
 }

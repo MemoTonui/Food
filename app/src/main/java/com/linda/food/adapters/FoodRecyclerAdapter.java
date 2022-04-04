@@ -1,7 +1,10 @@
 package com.linda.food.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.linda.food.Constants.Constants;
 import com.linda.food.R;
+import com.linda.food.UI.IndividualFood;
 import com.linda.food.models.Food;
 
 import java.util.List;
@@ -88,6 +93,8 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
         RatingBar rating;
         ImageView foodCart;
         ImageView favorite;
+        private SharedPreferences sharedPreferences;
+        private SharedPreferences.Editor editor;
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,11 +105,15 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
             rating = itemView.findViewById(R.id.ratingBar);
             foodCart = itemView.findViewById(R.id.cart);
             favorite = itemView.findViewById(R.id.favorites);
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(itemView.getContext());
+            editor = sharedPreferences.edit();
+
+
         }
 
         public void bind(Food food) {
             foodName.setText(food.getFoodName());
-            foodPrice.setText(String.valueOf(food.getFoodPrice()));
+            foodPrice.setText("Ksh. "+String.valueOf(food.getFoodPrice()));
             rating.setRating(food.getFoodRating());
             Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
             if(food.getAddedToCart()==true){
@@ -111,6 +122,17 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<FoodRecyclerAdapte
             if(food.getAddedToFavorites() == true){
                 favorite.setColorFilter(Color.rgb(220,0,0));
             }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    addFoodIdToSharedPreferences(food.getId());
+                    itemView.getContext().startActivity(new Intent(itemView.getContext(), IndividualFood.class));
+                }
+            });
+
+        }
+        private void addFoodIdToSharedPreferences(String foodId){
+            editor.putString(Constants.PREFERENCES_FOOD_ID,foodId).apply();
         }
     }
 }

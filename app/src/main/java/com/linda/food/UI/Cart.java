@@ -25,8 +25,7 @@ public class Cart extends AppCompatActivity {
 
     @BindView(R.id.checkout) Button proceedToCheckout;
     CartRecyclerAdapter cartRecyclerAdapter;
-    @BindView(R.id.failure)
-    TextView failure;
+    @BindView(R.id.failure) TextView failure;
    /* @BindView(R.id.progressBar)
     ProgressBar progressBar;*/
     @BindView(R.id.cartRecyclerView)RecyclerView recyclerView;
@@ -38,8 +37,12 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         cartFoodList = new ArrayList<>();
         if (cartFoodList == null){
+            cartRecyclerAdapter.notifyDataSetChanged();
             showEmptyCartMessage();
         }else {
             cartFoodList = PrefConfig.readListFromPref(getApplicationContext());
@@ -51,6 +54,8 @@ public class Cart extends AppCompatActivity {
                 startActivity(new Intent(Cart.this,Checkout.class));
             }
         });
+
+
     }
 
    private void setCartRecycler(List<Food> foodList){
@@ -70,4 +75,5 @@ public class Cart extends AppCompatActivity {
         failure.setText("You haven't added any item here!");
         failure.setVisibility(View.VISIBLE);
     }
+
 }

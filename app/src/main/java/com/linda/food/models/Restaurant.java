@@ -28,10 +28,12 @@ public class Restaurant implements Serializable
     private Integer restaurantRating;
     @SerializedName("restaurantStatus")
     @Expose
-    private Boolean restaurantStatus;
+    private String restaurantStatus;
     @SerializedName("restaurantImgUrl")
     @Expose
     private String restaurantImgUrl;
+    private String restaurantLongitude;
+    private String restaurantLatitude;
     @SerializedName("foods")
     @Expose
     private List<Object> foods = null;
@@ -58,7 +60,7 @@ public class Restaurant implements Serializable
      * @param restaurantStatus
      * @param restaurantImgUrl
      */
-    public Restaurant(String id, String restaurantName, String restaurantLocation, Integer restaurantRating, Boolean restaurantStatus, String restaurantImgUrl, List<Object> foods, Integer v) {
+    public Restaurant(String id, String restaurantName, String restaurantLocation, Integer restaurantRating, String restaurantStatus, String restaurantImgUrl, List<Object> foods, Integer v) {
         super();
         this.id = id;
         this.restaurantName = restaurantName;
@@ -102,11 +104,11 @@ public class Restaurant implements Serializable
         this.restaurantRating = restaurantRating;
     }
 
-    public Boolean getRestaurantStatus() {
+    public String getRestaurantStatus() {
         return restaurantStatus;
     }
 
-    public void setRestaurantStatus(Boolean restaurantStatus) {
+    public void setRestaurantStatus(String restaurantStatus) {
         this.restaurantStatus = restaurantStatus;
     }
 
@@ -134,4 +136,19 @@ public class Restaurant implements Serializable
         this.v = v;
     }
 
+    public String getRestaurantLongitude() {
+        return restaurantLongitude;
+    }
+
+    public void setRestaurantLongitude(String restaurant_longitude) {
+        this.restaurantLongitude = restaurant_longitude;
+    }
+
+    public String getRestaurantLatitude() {
+        return restaurantLatitude;
+    }
+
+    public void setRestaurantLatitude(String restaurant_latitude) {
+        this.restaurantLatitude = restaurant_latitude;
+    }
 }

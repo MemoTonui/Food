@@ -1,13 +1,5 @@
 package com.linda.food.UI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,10 +8,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.linda.food.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import butterknife.BindView;
+import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.linda.food.R;
 
 public class IntroductoryActivity extends AppCompatActivity {
 
@@ -60,9 +58,17 @@ public class IntroductoryActivity extends AppCompatActivity {
                     editor.putBoolean("FirstTime",false);
                     editor.commit();
                 }else {
-                    Intent intent = new Intent(IntroductoryActivity.this,Login.class);
-                    startActivity(intent);
-                    finish();
+                    if (FirebaseAuth.getInstance().getCurrentUser()!=null){
+                        Intent intent = new Intent(IntroductoryActivity.this,MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Intent intent = new Intent(IntroductoryActivity.this,SignUpActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 }
             }
         },SPLASH_SCREEN_TIME);

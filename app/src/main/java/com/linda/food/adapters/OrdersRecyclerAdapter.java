@@ -1,6 +1,7 @@
 package com.linda.food.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.linda.food.R;
 import com.linda.food.models.Food;
+import com.linda.food.models.Orders;
 
 import java.util.List;
 
 public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAdapter.OrdersViewHolder> {
     Context context;
-    List<Food> foodList;
+    List<Orders> foodList;
 
-    public OrdersRecyclerAdapter(Context context, List<Food> foodList) {
+    public OrdersRecyclerAdapter(Context context, List<Orders> foodList) {
         this.context = context;
         this.foodList = foodList;
     }
@@ -35,8 +37,8 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull OrdersViewHolder holder, int position) {
-        Food food = foodList.get(position);
-        holder.bind(food);
+        Orders orders = foodList.get(position);
+        holder.bind(orders);
     }
 
     @Override
@@ -52,20 +54,36 @@ public class OrdersRecyclerAdapter extends RecyclerView.Adapter<OrdersRecyclerAd
         TextView foodName;
         TextView foodPrice;
         RatingBar rating;
+        TextView foodStatus;
+        TextView time;
 
         public OrdersViewHolder(@NonNull View itemView) {
             super(itemView);
             foodName = itemView.findViewById(R.id.food_name);
             foodPrice = itemView.findViewById(R.id.food_price);
             foodImage = itemView.findViewById(R.id.food_image);
+            foodStatus = itemView.findViewById(R.id.food_status);
             rating = itemView.findViewById(R.id.ratingBar);
+            time = itemView.findViewById(R.id.time);
         }
 
-        public void bind(Food food) {
-            foodName.setText(food.getFoodName());
-            foodPrice.setText(String.valueOf(food.getFoodPrice()));
-            rating.setRating(food.getFoodRating());
-            Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
+        public void bind(Orders orders) {
+            for (Food food:orders.getFood()) {
+                foodName.setText(food.getFoodName());
+                foodPrice.setText("Ksh. "+String.valueOf(food.getFoodPrice()));
+                rating.setRating(food.getFoodRating());
+                if (orders.getStatus() == "Pending"){
+                    foodStatus.setText("Pending");
+                }
+                else if (orders.getStatus() == "Delivered"){
+                    foodStatus.setText("Delivered");
+                    foodStatus.setTextColor(Color.parseColor("#008000"));
+                }
+
+                time.setText(String.valueOf(orders.getDate()));
+                Glide.with(itemView.getContext()).load(food.getFoodImgUrl()).transform(new RoundedCorners(20)).centerCrop().into(foodImage);
+            }
+
         }
     }
 }
