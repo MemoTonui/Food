@@ -62,7 +62,7 @@ final class RestaurantsViewHolder extends RecyclerView.ViewHolder implements Vie
     TextView restaurantId;
     RatingBar rating;
     TextView restaurantStatus;
-    String isOpen ="isOpen";
+    String isClosed ="isOpen";
     int restaurant_id;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -88,12 +88,12 @@ final class RestaurantsViewHolder extends RecyclerView.ViewHolder implements Vie
         restaurantName.setText(business.getRestaurantName());
         restaurantId.setText(String.valueOf(business.getId()));
 
-        if (isOpen == business.getRestaurantStatus()){
-            restaurantStatus.setText("Open");
-            restaurantStatus.setTextColor(Color.rgb(0,200,100));
-        }else{
+        if (isClosed == business.getRestaurantStatus()){
             restaurantStatus.setText("Closed");
             restaurantStatus.setTextColor(Color.rgb(200,0,0));
+        }else{
+            restaurantStatus.setText("Open");
+            restaurantStatus.setTextColor(Color.rgb(0,200,100));
         }
         rating.setRating(business.getRestaurantRating());
     }

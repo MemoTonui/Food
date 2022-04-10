@@ -40,7 +40,7 @@ public class PrefConfig {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.clear();
+        editor.remove(LIST_KEY);
         editor.commit();
 
     }

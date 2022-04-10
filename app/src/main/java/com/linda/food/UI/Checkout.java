@@ -183,7 +183,8 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
                   assert response.body() != null;
                   addOrderToSharedPreferences(response.body().getId());
                   System.out.println("HEERRREEEEEEEEEEEEEEEEEEEE"+response.body().getId());
-                  //PrefConfig.ClearInPref(getApplicationContext(),cartFoodList);
+
+                  PrefConfig.ClearInPref(getApplicationContext(),cartFoodList);
                   Toast.makeText(Checkout.this, "Your Order Has Been Made", Toast.LENGTH_LONG).show();
                   startActivity(new Intent(Checkout.this,Success.class));
                   dialog.hide();
@@ -200,6 +201,8 @@ public class Checkout extends AppCompatActivity implements View.OnClickListener 
               dialog.hide();
               Toast.makeText(Checkout.this, "Your Order Has Been Made", Toast.LENGTH_LONG).show();
               startActivity(new Intent(Checkout.this,Success.class));
+              PrefConfig.ClearInPref(getApplicationContext(),cartFoodList);
+
           }
       });
     }

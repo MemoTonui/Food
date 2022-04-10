@@ -58,9 +58,11 @@ public class SignUpActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 if(TextUtils.isEmpty(phoneNumber.getText().toString().trim())){
+                    phoneNumber.setError("Please enter your phone number");
                     Toast.makeText(SignUpActivity.this,"Please enter your phone number",Toast.LENGTH_LONG).show();
                 }
                 else  if (phoneNumber.getText().toString().trim().length()!=10){
+                    phoneNumber.setError("Please enter a correct phone number");
                     Toast.makeText(SignUpActivity.this,"Please enter a correct phone number",Toast.LENGTH_LONG).show();
                 }
                 else {

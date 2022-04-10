@@ -108,13 +108,16 @@ public class ProfileSetup extends AppCompatActivity implements View.OnClickListe
         firebaseUid = sharedPreferences.getString(Constants.PREFERENCES_FIREBASE_USER_ID, null);
         if (fullName.isEmpty()){
             firstName.setError("Please Enter Your First Name");
+            return;
         }
             else if (email.isEmpty()){
                 emailAddress.setError("Please Enter Your Email");
+                return;
             }
         else
         if (myUsername.isEmpty()){
             username.setError("Please Enter Your User Name");
+            return;
         }
 
             User user = new User();
